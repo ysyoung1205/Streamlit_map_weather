@@ -186,7 +186,8 @@ def main():
 #----------------------------------------------------------------------------------------------ㅡㅡㅡㅡㅡㅡㅡㅡ
                 if "POP" in df.index:
                     POP_data = df.loc["POP"].astype(float)  # 숫자로 변환
-                    PCP_data = df.loc["PCP"].replace("강수없음", 0).astype(float)  # 숫자로 변환
+                    PCP_data = (df.loc["PCP"].replace({"강수없음": 0, "1mm 미만": 0}).astype(str).str.replace('mm', '', regex=False).astype(float)                             # float 변환
+)
 
                     POP_data.index = pd.to_datetime(POP_data.index, format="%Y%m%d %H:%M")  # 날짜+시간 변환
                     PCP_data.index = pd.to_datetime(PCP_data.index, format="%Y%m%d %H:%M")  # 날짜+시간 변환
